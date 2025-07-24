@@ -1,76 +1,126 @@
-# CopilotKit <> Mastra Starter
+# Step 1: Basic AG-UI Integration
 
-This is a starter template for building AI agents using [Mastra](https://mastra.ai) and [CopilotKit](https://copilotkit.ai). It provides a modern Next.js application with integrated AI capabilities and a beautiful UI.
+**🎯 Learning Focus**: Core AG-UI concepts with simple shared-state management
 
-## Prerequisites
+This step introduces the fundamental concepts of **AG-UI** (Agent User Interaction) using a simple proverbs application. You'll learn how one agent can power multiple client interfaces with synchronized state.
 
-- Node.js 18+ 
-- Any of the following package managers:
-  - pnpm (recommended)
-  - npm
-  - yarn
-  - bun
+## What You'll Learn
 
-> **Note:** This repository ignores lock files (package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb) to avoid conflicts between different package managers. Each developer should generate their own lock file using their preferred package manager. After that, make sure to delete it from the .gitignore.
+- ✅ **AG-UI Fundamentals**: How to integrate Mastra agents with AG-UI protocol
+- ✅ **Multiple Client Types**: Same agent powering both web and CLI interfaces  
+- ✅ **Shared-State Basics**: Simple state synchronization with a proverbs array
+- ✅ **Frontend Actions**: UI components that trigger agent actions (`setThemeColor`)
+- ✅ **Generative UI**: Agents rendering dynamic components (weather cards)
+- ✅ **Memory Visualization**: See agent memory updates in real-time
 
-## Getting Started
+## Key Features in This Step
 
-1. Add your OpenAI API key
-```bash
-# you can use whatever model Mastra supports
-echo "OPENAI_API_KEY=your-key-here" >> .env
+### Simple State Schema
+```typescript
+const AgentState = z.object({
+  proverbs: z.array(z.string()).default([]),
+});
 ```
 
-2. Install dependencies using your preferred package manager:
+### Two Client Interfaces
+1. **Web Interface**: React + CopilotKit with chat sidebar
+2. **CLI Interface**: Terminal-based chat with the same agent
+
+### Agent Configuration
+- Basic instructions: "You are a helpful assistant"
+- Weather tool integration
+- Simple proverbs management
+- Working memory with LibSQL
+
+## Running This Step
+
+### 🌐 Web Interface
 ```bash
-# Using pnpm (recommended)
-pnpm install
-
-# Using npm
-npm install
-
-# Using yarn
-yarn install
-
-# Using bun
-bun install
-```
-
-2. Start the development server:
-```bash
-# Using pnpm
-pnpm dev
-
-# Using npm
 npm run dev
-
-# Using yarn
-yarn dev
-
-# Using bun
-bun run dev
+# Opens http://localhost:3000
 ```
 
-This will start both the UI and agent servers concurrently.
+**Try these interactions:**
+- "Add a proverb about AI"
+- "Set the theme to orange" 
+- "Get the weather in San Francisco"
+- "Remove the first proverb"
 
-## Available Scripts
-The following scripts can also be run using your preferred package manager:
-- `dev` - Starts both UI and agent servers in development mode
-- `dev:debug` - Starts development servers with debug logging enabled
-- `build` - Builds the application for production
-- `start` - Starts the production server
-- `lint` - Runs ESLint for code linting
+### 💻 CLI Interface  
+```bash
+npm run cli
+# Interactive terminal chat
+```
 
-## Documentation
+**Try the same interactions in terminal!** Notice how both interfaces:
+- Connect to the same agent
+- Share the same memory and state
+- Both can add/remove proverbs
+- Both can trigger weather tool calls
 
-- [Mastra Documentation](https://mastra.ai/en/docs) - Learn more about Mastra and its features
-- [CopilotKit Documentation](https://docs.copilotkit.ai) - Explore CopilotKit's capabilities
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API
+## Key Observations
 
-## Contributing
+### Shared-State in Action
+1. Start the web interface and add some proverbs
+2. Open the CLI and ask "What proverbs do we have?"
+3. Add a proverb via CLI
+4. Refresh the web interface - your CLI changes appear!
 
-Feel free to submit issues and enhancement requests!
+### Multiple Tool Interactions
+- **Frontend Actions**: `setThemeColor` only works in web interface
+- **Agent Tools**: `weatherTool` works in both interfaces  
+- **Memory Updates**: Both interfaces show memory update notifications
 
-## License
+## Architecture in This Step
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Web Client    │    │   Weather Agent  │    │   CLI Client    │
+│  (React + CK)   │◄──►│   + AG-UI        │◄──►│   (Terminal)    │
+│   - Theme ctrl  │    │   - Weather tool │    │   - Pure chat   │
+│   - Proverbs UI │    │   - Proverbs     │    │   - Tool calls  │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+        │                        │                        │
+        └────────────────────────┼────────────────────────┘
+                                 │
+                    ┌─────────────────────────┐
+                    │    Shared-State         │
+                    │  proverbs: string[]     │
+                    │  + Working Memory       │
+                    └─────────────────────────┘
+```
+
+## Code Structure
+
+```
+src/
+├── app/
+│   ├── api/copilotkit/route.ts    # AG-UI integration endpoint
+│   ├── page.tsx                   # Web interface with proverbs
+│   └── layout.tsx                 # CopilotKit provider
+├── cli/index.ts                   # Terminal client
+├── mastra/
+│   ├── agents/index.ts            # Agent definition 
+│   ├── tools/index.ts             # Weather tool
+│   └── index.ts                   # Mastra configuration
+```
+
+## Next Steps
+
+After completing Step 1:
+
+1. **Experiment**: Try adding proverbs from both interfaces
+2. **Observe**: Notice how state synchronizes between clients
+3. **Compare**: Test tool calls in both web and CLI
+4. **Understand**: See how AG-UI enables multiple client types
+
+**Ready for Step 2?**
+```bash
+git checkout step-2
+```
+
+Step 2 introduces complex state schemas and agent personas - building toward a full project management application.
+
+---
+
+**🔑 Key Takeaway**: One agent, multiple interfaces, shared-state. This is the power of AG-UI!
