@@ -1,76 +1,179 @@
-# CopilotKit <> Mastra Starter
+# AG-UI Mastra Workshop
 
-This is a starter template for building AI agents using [Mastra](https://mastra.ai) and [CopilotKit](https://copilotkit.ai). It provides a modern Next.js application with integrated AI capabilities and a beautiful UI.
+![preview](./assets/preview.png)
 
-## Prerequisites
+A comprehensive workshop demonstrating **AG-UI** (Agent User Interaction) protocol with **Mastra** integration. This workshop shows how to build sophisticated AI applications with shared state, multiple client interfaces, and rich user interactions.
 
-- Node.js 18+ 
-- Any of the following package managers:
-  - pnpm (recommended)
-  - npm
-  - yarn
-  - bun
+## What is AG-UI?
 
-> **Note:** This repository ignores lock files (package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb) to avoid conflicts between different package managers. Each developer should generate their own lock file using their preferred package manager. After that, make sure to delete it from the .gitignore.
+AG-UI is a protocol for communicating between AI Agents and Users, enabling:
+- **Shared-State**: Real-time synchronization between agents and UI components
+- **Multiple Clients**: Build web apps, CLI tools, mobile apps - all connected to the same agent
+- **Generative UI**: Agents can render dynamic interface components
+- **Tool Integration**: Seamless integration of agent tools with user interfaces
 
-## Getting Started
+Learn more: [@ag-ui/mastra on npm](https://www.npmjs.com/package/@ag-ui/mastra)
 
-1. Add your OpenAI API key
+## Workshop Structure
+
+This workshop is organized into **3 progressive steps**, each building on the previous to demonstrate different aspects of AG-UI:
+
+### 🎯 **Step 1**: Basic AG-UI Integration
+**Branch**: `git checkout step-1`
+
+**Link**: https://github.com/CopilotKit/mastra-pm-canvas/tree/step-1
+
+**Focus**: Core concepts and simple state management
+
+- Simple agent state (proverbs array)
+- Basic CopilotKit integration with Mastra
+- Frontend actions and generative UI
+- CLI and Web clients with same agent
+
+### 🎯 **Step 2**: Complex State & Agent Behavior  
+**Branch**: `git checkout step-2`
+
+**Link**: https://github.com/CopilotKit/mastra-pm-canvas/tree/step-2
+
+**Focus**: Structured data and agent personas
+
+- Complex state schemas with Zod validation
+- Product manager agent with specific instructions
+- Working memory with structured data types
+- Enhanced CLI debugging with state snapshots
+
+### 🎯 **Step 3**: Production-Ready Application
+**Branch**: `git checkout step-3`
+
+**Link**: https://github.com/CopilotKit/mastra-pm-canvas/tree/step-3
+
+**Focus**: Full-featured project management interface
+
+- Complete kanban board and team management UI
+- Rich React component architecture
+- Professional project management interface
+- Multiple interaction patterns (modals, drag-drop, etc.)
+
+## Key Learning Outcomes
+
+By completing this workshop, you'll understand:
+
+- ✅ **Multi-Client Architecture**: How to build CLI and web interfaces for the same agent
+- ✅ **Shared-State Management**: How state synchronizes between agents and multiple UI clients
+- ✅ **Agent Design**: Creating agents with personas, tools, and memory
+- ✅ **UI Integration**: Building rich interfaces that react to agent state
+- ✅ **Production Patterns**: Scalable architecture for real-world applications
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- OpenAI API key
+- Package manager (pnpm recommended)
+
+### Setup
+
+1. **Clone and install dependencies**:
 ```bash
-# you can use whatever model Mastra supports
+git clone <repository-url>
+cd mastra-pm-canvas
+pnpm install
+```
+
+2. **Add your OpenAI API key**:
+```bash
 echo "OPENAI_API_KEY=your-key-here" >> .env
 ```
 
-2. Install dependencies using your preferred package manager:
+3. **Choose your starting point**:
 ```bash
-# Using pnpm (recommended)
-pnpm install
+# Start from the beginning
+git checkout step-1
 
-# Using npm
-npm install
-
-# Using yarn
-yarn install
-
-# Using bun
-bun install
+# Or jump to a specific step
+git checkout step-2
+git checkout step-3
 ```
 
-2. Start the development server:
+### Running the Workshop
+
+Each step provides **two different client interfaces** for the same agent:
+
+#### 🌐 **Web Interface** (CopilotKit + React)
 ```bash
-# Using pnpm
 pnpm dev
-
-# Using npm
-npm run dev
-
-# Using yarn
-yarn dev
-
-# Using bun
-bun run dev
+# Opens http://localhost:3000
 ```
 
-This will start both the UI and agent servers concurrently.
+#### 💻 **CLI Interface** (Terminal-based)
+```bash
+pnpm cli
+# Interactive chat in your terminal
+```
 
-## Available Scripts
-The following scripts can also be run using your preferred package manager:
-- `dev` - Starts both UI and agent servers in development mode
-- `dev:debug` - Starts development servers with debug logging enabled
-- `build` - Builds the application for production
-- `start` - Starts the production server
-- `lint` - Runs ESLint for code linting
+**Key Point**: Both interfaces connect to the **same agent** and share **the same state**. This demonstrates AG-UI's power in enabling multiple client types.
 
-## Documentation
+## Workshop Navigation
 
-- [Mastra Documentation](https://mastra.ai/en/docs) - Learn more about Mastra and its features
-- [CopilotKit Documentation](https://docs.copilotkit.ai) - Explore CopilotKit's capabilities
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API
+### Step-by-Step Progression
+```bash
+git checkout step-1    # Basic concepts
+# Work through step-1, then:
 
-## Contributing
+git checkout step-2    # Enhanced state management  
+# Work through step-2, then:
 
-Feel free to submit issues and enhancement requests!
+git checkout step-3    # Full application
+```
 
-## License
+### Compare Between Steps
+```bash
+# See what changed between steps
+git diff step-1 step-2 --name-only
+git diff step-2 step-3 --name-only
+```
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Architecture Overview
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Web Client    │    │   Mastra Agent   │    │   CLI Client    │
+│  (CopilotKit)   │◄──►│   + AG-UI        │◄──►│   (Terminal)    │
+│                 │    │                  │    │                 │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+        │                        │                        │
+        └────────────────────────┼────────────────────────┘
+                                 │
+                         ┌──────────────┐
+                         │ Shared-State │
+                         │   + Memory   │
+                         └──────────────┘
+```
+
+## Technologies Used
+
+- **[Mastra](https://mastra.ai)**: AI agent framework
+- **[AG-UI](https://www.npmjs.com/package/@ag-ui/mastra)**: Agent User Interaction protocol  
+- **[CopilotKit](https://copilotkit.ai)**: React AI interface components
+- **[Next.js](https://nextjs.org)**: React framework
+- **[Zod](https://zod.dev)**: Schema validation
+- **[LibSQL](https://github.com/libsql/libsql)**: SQLite-compatible database
+
+## Support & Resources
+
+- 📖 [Mastra Documentation](https://mastra.ai/en/docs)
+- 📖 [CopilotKit Documentation](https://docs.copilotkit.ai)
+- 📦 [AG-UI Mastra Package](https://www.npmjs.com/package/@ag-ui/mastra)
+
+## Next Steps
+
+After completing this workshop:
+1. Experiment with custom tools and agent instructions
+2. Try building additional client interfaces (mobile, desktop)
+3. Explore more complex agent behaviors and state schemas
+4. Build your own production AG-UI application
+
+---
+
+**Happy Building! 🚀**
