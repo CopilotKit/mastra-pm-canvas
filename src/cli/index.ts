@@ -56,8 +56,11 @@ async function chatLoop() {
               },
               onToolCallResultEvent({ event }) {
                 if (event.content) {
-                  console.log("🔍 Tool call result:", event.content);
+                  console.log("\n🔍 Tool call result:", event.content);
                 }
+              },
+              onStateSnapshotEvent({ event }) {
+                console.log("\n🔍 State snapshot:", event.snapshot);
               },
             },
           );
