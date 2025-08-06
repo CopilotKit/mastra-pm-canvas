@@ -3,6 +3,9 @@ import { weatherAgent } from "@/mastra/agents";
 import { MastraAgent } from "@ag-ui/mastra"
 import { randomUUID } from "node:crypto";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
