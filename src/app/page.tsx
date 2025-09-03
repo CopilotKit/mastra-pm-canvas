@@ -41,7 +41,7 @@ export default function CopilotKitPage() {
 
 function YourMainContent({ themeColor }: { themeColor: string }) {
   // 🪁 Shared State: https://docs.copilotkit.ai/coagents/shared-state
-  const {state, setState} = useCoAgent<AgentState>({
+  const {state} = useCoAgent<AgentState>({
     name: "weatherAgent",
     initialState: {
       projectName: "My Project",
